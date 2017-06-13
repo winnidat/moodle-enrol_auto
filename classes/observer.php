@@ -73,8 +73,10 @@ class observer {
         if (!$DB->record_exists('user_enrolments', array('enrolid' => $instance->id, 'userid' => $eventdata['userid']))) {
             $autoplugin->enrol_user($instance, $eventdata['userid'], $instance->roleid);
 
+            // Send welcome message.
             if ($instance->customint2) {
-                self::schedule_welcome_email($instance, $eventdata['userid']);
+                $autoplugin = enrol_get_plugin('auto');
+                $autoplugin->email_welcome_message($instance, $DB->get_record('user', array('id' => $eventdata['userid'])));
             }
         }
     }
@@ -118,30 +120,49 @@ class observer {
 
             $autoplugin->enrol_user($instance, $eventdata['userid'], $instance->roleid);
 
+            // Send welcome message.
             if ($instance->customint2) {
-                self::schedule_welcome_email($instance, $eventdata['userid']);
+                $autoplugin = enrol_get_plugin('auto');
+                $autoplugin->email_welcome_message($instance, $DB->get_record('user', array('id' => $eventdata['userid'])));
             }
+        } 
+    }    
 
-        }
-    }
-
-    static function schedule_welcome_email($instance, $userid) {
+    public static function user_created($event) {
         global $DB;
 
-        $user = $DB->get_record('user', array('id' => $userid));
-        if (empty($user)) {
-            // wat?
-            return false;
+        $eventdata = $event->get_data();
+        echo var_dump($eventdata);
+
+          if (!enrol_is_enabled('auto')) {
+            return;
         }
 
-        // Schedule welcome message task.
-        $emailtask = new \enrol_auto\task\course_welcome_email();
-        // add custom data
-        $emailtask->set_custom_data(array(
-            'user' => $user,
-            'instance' => $instance
-        ));
-        // queue it
-        \core\task\manager::queue_adhoc_task($emailtask);
+        // Get all courses that have an auto enrol plugin, set to auto enrol on login, where the user isn't enrolled yet
+        $sql = "SELECT e.courseid
+            FROM {enrol} e
+            LEFT JOIN {user_enrolments} ue ON e.id = ue.enrolid AND ue.userid = ?
+            WHERE e.enrol = 'auto'
+            AND e.status = ?
+            AND e.customint3 = ?
+            AND ue.id IS NULL";
+        if (!$courses = $DB->get_records_sql($sql, array($eventdata['objectid'], ENROL_INSTANCE_ENABLED, 4))) {
+            return;
+        }
+
+        $autoplugin = enrol_get_plugin('auto');
+        foreach ($courses as $course) {
+            if (!$instance = $autoplugin->get_instance_for_course($course->courseid)) {
+                continue;
+            }
+
+            $autoplugin->enrol_user($instance, $eventdata['objectid'], $instance->roleid);
+
+            // Send welcome message.
+            if ($instance->customint2) {
+                $autoplugin = enrol_get_plugin('auto');
+                $autoplugin->email_welcome_message($instance, $DB->get_record('user', array('id' => $eventdata['objectid'])));
+            }
+        } 
     }
 }
