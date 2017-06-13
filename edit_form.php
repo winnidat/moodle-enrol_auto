@@ -52,7 +52,8 @@ class enrol_auto_edit_form extends moodleform {
 
         $options = array(ENROL_AUTO_COURSE_VIEWED => get_string('courseview', 'enrol_auto'),
                          ENROL_AUTO_LOGIN => get_string('userlogin', 'enrol_auto'),
-                         ENROL_AUTO_MOD_VIEWED    => get_string('modview', 'enrol_auto'));
+                         ENROL_AUTO_MOD_VIEWED    => get_string('modview', 'enrol_auto'),
+                         ENROL_AUTO_USER_CREATED => get_string('usercreated', 'enrol_auto'));
         $mform->addElement('select', 'customint3', get_string('enrolon', 'enrol_auto'), $options);
         $mform->addHelpButton('customint3', 'enrolon', 'enrol_auto');
 
