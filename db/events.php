@@ -40,3 +40,8 @@ $observers[] = array(
     'eventname'   => '\core\event\user_loggedin',
     'callback'    => '\enrol_auto\observer::user_loggedin'
 );
+
+$observers[] = array(
+    'eventname'   => '\core\event\user_created',
+    'callback'    => '\enrol_auto\observer::user_created'
+);
