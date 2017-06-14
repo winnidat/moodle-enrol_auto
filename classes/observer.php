@@ -132,8 +132,7 @@ class observer {
         global $DB;
 
         $eventdata = $event->get_data();
-        echo var_dump($eventdata);
-
+       
           if (!enrol_is_enabled('auto')) {
             return;
         }
