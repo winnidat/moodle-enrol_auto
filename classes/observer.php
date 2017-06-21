@@ -27,7 +27,7 @@ namespace enrol_auto;
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot . '/enrol/locallib.php');
-
+require_once($CFG->dirroot . '/user/profile/lib.php');
 /**
  * Event observer for enrol_auto.
  */
@@ -131,12 +131,41 @@ class observer {
     public static function user_created($event) {
         global $DB;
 
+
         $eventdata = $event->get_data();
-       
+        
           if (!enrol_is_enabled('auto')) {
             return;
         }
+        $user = $DB->get_record('user', array('id'=> $eventdata['objectid']));
+        if(isset($_POST['firstname']) && $_POST['firstname'] != ''){
+            $user->firstname = $_POST['firstname'];
+        }
+         if($user->firstname == ''){
+            $user->firstname = $user->username;
+        }
+        
+        if(isset($_POST['lastname']) && $_POST['lastname'] != ''){
+            $user->lastname = $_POST['lastname'];
+        }
+        if($user->lastname == ''){
+           $user->lastname = $user->id;
+        }
+        if(isset($_POST['email']) && $_POST['email'] != ''){
+            $user->email = $_POST['email'];
+        }
+        if($user->email == ''){
+        $user->email = $user->username."@mailinator.com";
+        }
 
+        
+        $DB->update_record('user', $user, $bulk=false);
+        // $url = new moodle_url('/course/view.php', array('id' => 3));
+        // redirect($url);
+
+    
+        
+        
         // Get all courses that have an auto enrol plugin, set to auto enrol on login, where the user isn't enrolled yet
         $sql = "SELECT e.courseid
             FROM {enrol} e
