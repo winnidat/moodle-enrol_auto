@@ -141,8 +141,10 @@ class observer {
         if(isset($_POST['firstname']) && $_POST['firstname'] != ''){
             $user->firstname = $_POST['firstname'];
         }
+
+         $user->username='user'.$user->id;
          if($user->firstname == ''){
-            $user->firstname = $user->username;
+            $user->firstname = 'user';
         }
         
         if(isset($_POST['lastname']) && $_POST['lastname'] != ''){
@@ -194,3 +196,4 @@ class observer {
         } 
     }
 }
+
