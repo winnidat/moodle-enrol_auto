@@ -153,9 +153,9 @@ class observer {
         if($user->lastname == ''){
            $user->lastname = $user->id;
         }
-        if(isset($_POST['email']) && $_POST['email'] != ''){
+       /* if(isset($_POST['email']) && $_POST['email'] != ''){
             $user->email = $_POST['email'];
-        }
+        }*/
         if($user->email == ''){
         $user->email = $user->username."@mailinator.com";
         }
