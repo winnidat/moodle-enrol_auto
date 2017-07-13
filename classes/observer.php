@@ -28,6 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot . '/enrol/locallib.php');
 require_once($CFG->dirroot . '/user/profile/lib.php');
+require_once($CFG->dirroot . '/enrol/auto/lib.php');
 /**
  * Event observer for enrol_auto.
  */
@@ -153,7 +154,7 @@ class observer {
         if($user->lastname == ''){
            $user->lastname = $user->id;
         }
-       /* if(isset($_POST['email']) && $_POST['email'] != ''){
+        /*if(isset($_POST['email']) && $_POST['email'] != ''){
             $user->email = $_POST['email'];
         }*/
         if($user->email == ''){
@@ -196,4 +197,3 @@ class observer {
         } 
     }
 }
-
