@@ -129,7 +129,7 @@ class observer {
         } 
     }    
 
-    public static function user_created($event) {
+    public static function token_created($event) {
         global $DB;
 
 
@@ -137,37 +137,6 @@ class observer {
         
           if (!enrol_is_enabled('auto')) {
             return;
-        }
-        $user = $DB->get_record('user', array('id'=> $eventdata['objectid']));
-        if(isset($_POST['firstname']) && $_POST['firstname'] != ''){
-            $user->firstname = $_POST['firstname'];
-        }
-
-         $user->username='user'.$user->id;
-         if($user->firstname == ''){
-            $user->firstname = 'user';
-        }
-        
-        if(isset($_POST['lastname']) && $_POST['lastname'] != ''){
-            $user->lastname = $_POST['lastname'];
-        }
-        if($user->lastname == ''){
-           $user->lastname = $user->id;
-        }
-        /*if(isset($_POST['email']) && $_POST['email'] != ''){
-            $user->email = $_POST['email'];
-        }*/
-        if($user->email == ''){
-        $user->email = $user->username."@mailinator.com";
-        }
-
-        
-        $DB->update_record('user', $user, $bulk=false);
-        // $url = new moodle_url('/course/view.php', array('id' => 3));
-        // redirect($url);
-
-    
-        
         
         // Get all courses that have an auto enrol plugin, set to auto enrol on login, where the user isn't enrolled yet
         $sql = "SELECT e.courseid
@@ -192,7 +161,7 @@ class observer {
             // Send welcome message.
             if ($instance->customint2) {
                 $autoplugin = enrol_get_plugin('auto');
-                $autoplugin->email_welcome_message($instance, $DB->get_record('user', array('id' => $eventdata['objectid'])));
+                $autoplugin->email_welcome_message($instance, $DB->get_record('user', array('id' => $eventdata['objectid']))); 
             }
         } 
     }

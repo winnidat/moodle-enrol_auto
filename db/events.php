@@ -41,7 +41,12 @@ $observers[] = array(
     'callback'    => '\enrol_auto\observer::user_loggedin'
 );
 
-$observers[] = array(
+/*$observers[] = array(
     'eventname'   => '\core\event\user_created',
     'callback'    => '\enrol_auto\observer::user_created'
+);*/
+
+$observers[] = array(
+    'eventname'   => 'core\event\webservice_token_created',
+    'callback'    => '\enrol_auto\observer::token_created'
 );
