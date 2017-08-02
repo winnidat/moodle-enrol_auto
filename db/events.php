@@ -43,5 +43,6 @@ $observers[] = array(
 
 $observers[] = array(
     'eventname'   => '\core\event\user_created',
-    'callback'    => '\enrol_auto\observer::user_created'
+    'callback'    => '\enrol_auto\observer::user_created',
+    'priority'    => 100
 );
