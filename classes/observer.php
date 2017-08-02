@@ -138,6 +138,8 @@ class observer {
           if (!enrol_is_enabled('auto')) {
             return;
         }
+        
+        /*
         $user = $DB->get_record('user', array('id'=> $eventdata['objectid']));
         if(isset($_POST['firstname']) && $_POST['firstname'] != ''){
             $user->firstname = $_POST['firstname'];
@@ -156,7 +158,7 @@ class observer {
         }
         /*if(isset($_POST['email']) && $_POST['email'] != ''){
             $user->email = $_POST['email'];
-        }*/
+        }
         if($user->email == ''){
         $user->email = $user->username."@mailinator.com";
         }
@@ -165,6 +167,7 @@ class observer {
         $DB->update_record('user', $user, $bulk=false);
         // $url = new moodle_url('/course/view.php', array('id' => 3));
         // redirect($url);
+        */
 
     
         
