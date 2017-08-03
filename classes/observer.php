@@ -93,7 +93,7 @@ class observer {
         $eventdata = $event->get_data();
 
         if (!enrol_is_enabled('auto')) {
-            return;
+           return;
         }
 
         if (is_siteadmin($eventdata['userid'])) {
@@ -129,46 +129,32 @@ class observer {
         } 
     }    
 
-    public static function user_created($event) {
+ public static function user_created($event) {
         global $DB;
 
-
         $eventdata = $event->get_data();
-        
-          if (!enrol_is_enabled('auto')) {
-            return;
-        }
-        
-        /*
-        $user = $DB->get_record('user', array('id'=> $eventdata['objectid']));
-        if(isset($_POST['firstname']) && $_POST['firstname'] != ''){
-            $user->firstname = $_POST['firstname'];
-        }
+        $mail = get_config('enrol_auto','email');
 
-         $user->username='user'.$user->id;
-         if($user->firstname == ''){
+        if (!enrol_is_enabled('auto')) {
+           return;
+        }
+            
+        $user = $DB->get_record('user', array('id'=> $eventdata['objectid']));
+     
+        $user->username='user'.$user->id;
+        if($user->firstname == ''){
             $user->firstname = 'user';
         }
         
-        if(isset($_POST['lastname']) && $_POST['lastname'] != ''){
-            $user->lastname = $_POST['lastname'];
-        }
         if($user->lastname == ''){
            $user->lastname = $user->id;
         }
-        /*if(isset($_POST['email']) && $_POST['email'] != ''){
-            $user->email = $_POST['email'];
-        }
+
         if($user->email == ''){
         $user->email = $user->username."@mailinator.com";
         }
 
-        
         $DB->update_record('user', $user, $bulk=false);
-        // $url = new moodle_url('/course/view.php', array('id' => 3));
-        // redirect($url);
-        */
-
     
         
         
@@ -195,7 +181,7 @@ class observer {
             // Send welcome message.
             if ($instance->customint2) {
                 $autoplugin = enrol_get_plugin('auto');
-                $autoplugin->email_welcome_message($instance, $DB->get_record('user', array('id' => $eventdata['objectid'])));
+                $autoplugin->email_welcome_message($instance, $DB->get_record('user', array('id' => $eventdata['objectid']))); 
             }
         } 
     }
