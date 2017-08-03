@@ -24,7 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2017061315;        // The current plugin version (Date: YYYYMMDDXX)
+$plugin->version   = 2017073000;        // The current plugin version (Date: YYYYMMDDXX)
 $plugin->requires  = 2015051100;        // Requires this Moodle version
 $plugin->component = 'enrol_auto';      // Full name of the plugin (used for diagnostics)
 $plugin->release = 'hartbeespoort-r2';

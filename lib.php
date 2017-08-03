@@ -157,7 +157,7 @@ class enrol_auto_plugin extends enrol_plugin {
         $fields['customint2']      = $this->get_config('sendcoursewelcomemessage');
         $fields['customint3']      = $this->get_config('enrolon');
         $fields['customtext2']     = $this->get_config('modviewmods');
-
+        $fields['customtext2']     = $this->get_config('email');
         return $fields;
     }
 
