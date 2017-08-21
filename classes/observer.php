@@ -140,8 +140,10 @@ class observer {
         }
             
         $user = $DB->get_record('user', array('id'=> $eventdata['objectid']));
-     
-        $user->username='user'.$user->id;
+        if($user->username ==''){
+          $user->username='user'.$user->id;  
+        }
+        
         if($user->firstname == ''){
             $user->firstname = 'user';
         }
