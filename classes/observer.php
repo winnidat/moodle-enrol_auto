@@ -133,7 +133,7 @@ class observer {
         global $DB;
 
         $eventdata = $event->get_data();
-        $mail = get_config('enrol_auto','email');
+        $mail = get_config('enrol_auto','emaildomain');
 
         if (!enrol_is_enabled('auto')) {
            return;
@@ -153,7 +153,11 @@ class observer {
         }
 
         if($user->email == ''){
-        $user->email = $user->username."@mailinator.com";
+
+        $user->email = $user->username."@".$mail;
+            if (!filter_var($user->email, FILTER_VALIDATE_EMAIL)) {
+                 $user->email = $user->username."@example.com";
+            }
         }
 
         $DB->update_record('user', $user, $bulk=false);

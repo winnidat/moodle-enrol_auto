@@ -46,11 +46,7 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configselect('enrol_auto/enrolon',
         get_string('enrolon', 'enrol_auto'), get_string('enrolon_desc', 'enrol_auto'), ENROL_AUTO_COURSE_VIEWED, $options));
 
-    $options = array('1' => '@example.com',
-                     '2' => '@mailinator.com');
-
-    $settings->add(new admin_setting_configselect('enrol_auto/email',
-        'E-Mail','E-Mail Domain for generated Accounts', 1, $options));
+     $settings->add(new admin_setting_configtext('enrol_auto/emaildomain','Domain','E-Mail Domain without @','example.com'));
 
 
     // Clear the observer cache to ensure observers for any newly-installed plugins are added
